@@ -93,7 +93,7 @@ const UserResume = (props: any) => {
 const UserUpdateInfo = (props: any) => {
     return (
         <div>
-            //todo
+            Đang Dev tính năng này
         </div>
     )
 }
@@ -120,7 +120,7 @@ const ManageAccount = (props: IProps) => {
         {
             key: 'user-password',
             label: `Thay đổi mật khẩu`,
-            children: `//todo`,
+            children: `Đang Dev tính năng này`,
         },
     ];
 

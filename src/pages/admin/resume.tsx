@@ -93,6 +93,37 @@ const ResumePage = () => {
         },
 
         {
+            title: 'CV',
+            dataIndex: 'url', // Trỏ đúng vào trường url của resume
+            hideInSearch: true, // Không hiển thị ô này ở thanh tìm kiếm phía trên
+            render: (text, record, index, action) => {
+                // Khai báo fallback an toàn
+                let backendUrl = "http://localhost:8080";
+
+                // Lấy biến do Vite build ra
+                const envUrl = import.meta.env.VITE_API_URL;
+
+                // Kiểm tra xem biến này có tồn tại thật không, VÀ nó không phải là chuỗi chữ "undefined"
+                if (envUrl && String(envUrl) !== "undefined") {
+                    backendUrl = envUrl;
+                }
+
+                const downloadUrl = `${backendUrl}/storage/resume/${record.url}`;
+
+                return (
+                    <a
+                        href={downloadUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{ color: '#1677ff', fontWeight: '500' }}
+                    >
+                        Xem CV
+                    </a>
+                );
+            }
+        },
+
+        {
             title: 'CreatedAt',
             dataIndex: 'createdAt',
             width: 200,
