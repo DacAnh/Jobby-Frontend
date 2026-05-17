@@ -11,6 +11,7 @@ import { sfIn } from "spring-filter-query-builder";
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/vi'
 dayjs.extend(relativeTime);
 
 
@@ -121,7 +122,12 @@ const JobCard = (props: IProps) => {
                                                 <div className={styles["job-title"]}>{item.name}</div>
                                                 <div className={styles["job-location"]}><EnvironmentOutlined style={{ color: '#58aaab' }} />&nbsp;{getLocationName(item.location)}</div>
                                                 <div><ThunderboltOutlined style={{ color: 'orange' }} />&nbsp;{(item.salary + "")?.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ</div>
-                                                <div className={styles["job-updatedAt"]}>{item.updatedAt ? dayjs(item.updatedAt).locale('en').fromNow() : dayjs(item.createdAt).locale('en').fromNow()}</div>
+                                                <div className={styles["job-updatedAt"]}>
+                                                    {item.updatedAt
+                                                        ? dayjs(item.updatedAt).locale('vi').fromNow()
+                                                        : dayjs(item.createdAt).locale('vi').fromNow()
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
 

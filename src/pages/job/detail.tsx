@@ -9,6 +9,7 @@ import { DollarOutlined, EnvironmentOutlined, HistoryOutlined } from "@ant-desig
 import { getLocationName } from "@/config/utils";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/vi';
 import ApplyModal from "@/components/client/modal/apply.modal";
 dayjs.extend(relativeTime)
 
@@ -73,7 +74,11 @@ const ClientJobDetailPage = (props: any) => {
                                     <EnvironmentOutlined style={{ color: '#58aaab' }} />&nbsp;{getLocationName(jobDetail.location)}
                                 </div>
                                 <div>
-                                    <HistoryOutlined /> {jobDetail.updatedAt ? dayjs(jobDetail.updatedAt).locale("en").fromNow() : dayjs(jobDetail.createdAt).locale("en").fromNow()}
+                                    <HistoryOutlined />
+                                    {jobDetail.updatedAt
+                                        ? dayjs(jobDetail.updatedAt).locale("vi").fromNow()
+                                        : dayjs(jobDetail.createdAt).locale("vi").fromNow()
+                                    }
                                 </div>
                                 <Divider />
                                 {parse(jobDetail.description)}
