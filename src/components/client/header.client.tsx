@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
-import { CodeOutlined, ContactsOutlined, FireOutlined, LogoutOutlined, MenuFoldOutlined, RiseOutlined, TwitterOutlined } from '@ant-design/icons';
+import {
+    CodeOutlined, ContactsOutlined, FireOutlined, LogoutOutlined,
+    MenuFoldOutlined, RiseOutlined, TwitterOutlined, LoginOutlined
+} from '@ant-design/icons';
 import { Avatar, Drawer, Dropdown, MenuProps, Space, message } from 'antd';
 import { Menu, ConfigProvider } from 'antd';
 import styles from '@/styles/client.module.scss';
@@ -27,7 +30,7 @@ const Header = (props: any) => {
 
     useEffect(() => {
         setCurrent(location.pathname);
-    }, [location])
+    }, [location]);
 
     const items: MenuProps['items'] = [
         {
@@ -47,49 +50,57 @@ const Header = (props: any) => {
         }
     ];
 
-
-
-    const onClick: MenuProps['onClick'] = (e) => {
-        setCurrent(e.key);
-    };
-
     const handleLogout = async () => {
         const res = await callLogout();
         if (res && res && +res.statusCode === 200) {
             dispatch(setLogoutAction({}));
             message.success('Đăng xuất thành công');
-            navigate('/')
+            navigate('/');
         }
-    }
+    };
 
+    // Xử lý sự kiện click tập trung cho cả Dropdown (PC) và Menu (Mobile)
+    const handleMenuClick: MenuProps['onClick'] = (e) => {
+        setCurrent(e.key);
+        setOpenMobileMenu(false); // Tự động đóng Menu mobile khi click
+
+        if (e.key === 'logout') {
+            handleLogout();
+        } else if (e.key === 'manage-account') {
+            setOpenManageAccount(true);
+        }
+    };
+
+    // Khai báo itemsDropdown sạch sẽ, không nhúng onClick vào thẻ label
     const itemsDropdown = [
         {
-            label: <label
-                style={{ cursor: 'pointer' }}
-                onClick={() => setOpenManageAccount(true)}
-            >Quản lý tài khoản</label>,
+            label: 'Quản lý tài khoản',
             key: 'manage-account',
             icon: <ContactsOutlined />
         },
-        ...(user.role?.permissions?.length ? [{
-            label: <Link
-                to={"/admin"}
-            >Trang Quản Trị</Link>,
+        ...(user?.role?.permissions?.length ? [{
+            label: <Link to={"/admin"}>Trang Quản Trị</Link>,
             key: 'admin',
             icon: <FireOutlined />
-        },] : []),
-
+        }] : []),
         {
-            label: <label
-                style={{ cursor: 'pointer' }}
-                onClick={() => handleLogout()}
-            >Đăng xuất</label>,
+            label: 'Đăng xuất',
             key: 'logout',
             icon: <LogoutOutlined />
         },
     ];
 
-    const itemsMobiles = [...items, ...itemsDropdown];
+    // Tạo mảng Mobile động dựa trên trạng thái xác thực
+    const itemsMobiles = isAuthenticated
+        ? [...items, ...itemsDropdown]
+        : [
+            ...items,
+            {
+                label: <Link to={'/login'}>Đăng Nhập</Link>,
+                key: 'login',
+                icon: <LoginOutlined />
+            }
+        ];
 
     return (
         <>
@@ -110,50 +121,56 @@ const Header = (props: any) => {
                                         },
                                     }}
                                 >
-
                                     <Menu
-                                        // onClick={onClick}
                                         selectedKeys={[current]}
                                         mode="horizontal"
                                         items={items}
+                                        onClick={handleMenuClick}
                                     />
                                 </ConfigProvider>
                                 <div className={styles['extra']}>
                                     {isAuthenticated === false ?
                                         <Link to={'/login'}>Đăng Nhập</Link>
                                         :
-                                        <Dropdown menu={{ items: itemsDropdown }} trigger={['click']}>
+                                        <Dropdown
+                                            menu={{
+                                                items: itemsDropdown,
+                                                onClick: handleMenuClick // Truyền hàm xử lý vào Dropdown
+                                            }}
+                                            trigger={['click']}
+                                        >
                                             <Space style={{ cursor: "pointer" }}>
                                                 <span>Xin chào {user?.name}</span>
                                                 <Avatar> {user?.name?.substring(0, 2)?.toUpperCase()} </Avatar>
                                             </Space>
                                         </Dropdown>
                                     }
-
                                 </div>
-
                             </div>
                         </div>
                         :
                         <div className={styles['header-mobile']}>
-                            <span>Your APP</span>
+                            <span>Jobby</span>
                             <MenuFoldOutlined onClick={() => setOpenMobileMenu(true)} />
                         </div>
                     }
                 </div>
             </div>
-            <Drawer title="Chức năng"
+
+            <Drawer
+                title="Chức năng"
                 placement="right"
                 onClose={() => setOpenMobileMenu(false)}
                 open={openMobileMenu}
             >
                 <Menu
-                    onClick={onClick}
+                    onClick={handleMenuClick} // Truyền hàm xử lý vào Menu Mobile
                     selectedKeys={[current]}
                     mode="vertical"
-                    items={itemsMobiles}
+                    items={itemsMobiles} // Sử dụng mảng động đã cấu hình
                 />
             </Drawer>
+
             <ManageAccount
                 open={openMangeAccount}
                 onClose={setOpenManageAccount}
