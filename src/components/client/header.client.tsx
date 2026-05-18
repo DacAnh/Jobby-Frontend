@@ -150,7 +150,20 @@ const Header = (props: any) => {
                         </div>
                         :
                         <div className={styles['header-mobile']}>
-                            <Link to={'/'}>Jobby</Link>
+                            <Link
+                                to={'/'}
+                                style={{
+                                    textDecoration: 'none', // Bỏ gạch chân mặc định của thẻ a
+                                    fontSize: '20px',       // Tăng kích cỡ chữ
+                                    fontWeight: 'bold',     // In đậm
+                                    color: '#1677ff',       // Màu xanh Ant Design (hoặc màu chủ đạo của bạn)
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px'              // Khoảng cách nếu bạn chèn thêm icon
+                                }}
+                            >
+                                Jobby
+                            </Link>
                             <MenuFoldOutlined onClick={() => setOpenMobileMenu(true)} />
                         </div>
                     }
@@ -158,16 +171,30 @@ const Header = (props: any) => {
             </div>
 
             <Drawer
-                title="Chức năng"
+                // THAY ĐỔI TẠI ĐÂY: Hiển thị tên user trên title nếu đã đăng nhập, nếu chưa thì để "Chức năng"
+                title={
+                    isAuthenticated ? (
+                        <Space style={{ display: 'flex', alignItems: 'center' }}>
+                            <Avatar size="small" style={{ backgroundColor: '#1677ff' }}>
+                                {user?.name?.substring(0, 2)?.toUpperCase()}
+                            </Avatar>
+                            <span style={{ fontSize: '16px', fontWeight: '500' }}>
+                                Xin chào, {user?.name}
+                            </span>
+                        </Space>
+                    ) : (
+                        "Chức năng"
+                    )
+                }
                 placement="right"
                 onClose={() => setOpenMobileMenu(false)}
                 open={openMobileMenu}
             >
                 <Menu
-                    onClick={handleMenuClick} // Truyền hàm xử lý vào Menu Mobile
+                    onClick={handleMenuClick}
                     selectedKeys={[current]}
                     mode="vertical"
-                    items={itemsMobiles} // Sử dụng mảng động đã cấu hình
+                    items={itemsMobiles}
                 />
             </Drawer>
 
