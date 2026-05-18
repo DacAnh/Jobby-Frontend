@@ -44,12 +44,10 @@ const UserResume = (props: any) => {
         {
             title: 'Công Ty',
             dataIndex: "companyName",
-
         },
         {
             title: 'Job title',
             dataIndex: ["job", "name"],
-
         },
         {
             title: 'Trạng thái',
@@ -72,6 +70,7 @@ const UserResume = (props: any) => {
                     <a
                         href={`${import.meta.env.VITE_BACKEND_URL}/storage/resume/${record?.url}`}
                         target="_blank"
+                        rel="noreferrer"
                     >Chi tiết</a>
                 )
             },
@@ -85,6 +84,9 @@ const UserResume = (props: any) => {
                 dataSource={listCV}
                 loading={isFetching}
                 pagination={false}
+                rowKey="id" // Khai báo rowKey để tránh warning trong console
+                // CRITICAL FOR MOBILE: Cho phép bảng vuốt ngang thay vì bóp méo chữ
+                scroll={{ x: 'max-content' }}
             />
         </div>
     )
@@ -124,7 +126,6 @@ const ManageAccount = (props: IProps) => {
         },
     ];
 
-
     return (
         <>
             <Modal
@@ -134,17 +135,21 @@ const ManageAccount = (props: IProps) => {
                 maskClosable={false}
                 footer={null}
                 destroyOnClose={true}
+                // Tối ưu Modal cho Mobile: Choán hết chiều ngang màn hình và tinh chỉnh style
                 width={isMobile ? "100%" : "1000px"}
+                style={isMobile ? { top: 10, margin: 0, padding: 0 } : {}}
+                bodyStyle={isMobile ? { padding: '10px' } : {}}
             >
-
-                <div style={{ minHeight: 400 }}>
+                {/* Trên Mobile nên để minHeight thấp hơn để không bị cuộn trang ảo */}
+                <div style={{ minHeight: isMobile ? 'auto' : 400 }}>
                     <Tabs
                         defaultActiveKey="user-resume"
                         items={items}
                         onChange={onChange}
+                        // Nếu nội dung tab quá nhiều, cho phép vuốt ngang header của Tabs
+                        tabPosition="top"
                     />
                 </div>
-
             </Modal>
         </>
     )

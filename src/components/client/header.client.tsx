@@ -150,7 +150,7 @@ const Header = (props: any) => {
                         </div>
                         :
                         <div className={styles['header-mobile']}>
-                            <span>Jobby</span>
+                            <Link to={'/'}>Jobby</Link>
                             <MenuFoldOutlined onClick={() => setOpenMobileMenu(true)} />
                         </div>
                     }

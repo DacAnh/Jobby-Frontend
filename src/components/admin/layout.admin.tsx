@@ -10,6 +10,8 @@ import {
     AliwangwangOutlined,
     BugOutlined,
     ScheduleOutlined,
+    HomeOutlined, // Thêm icon Home
+    LogoutOutlined
 } from '@ant-design/icons';
 import { Layout, Menu, Dropdown, Space, message, Avatar, Button } from 'antd';
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -70,7 +72,13 @@ const LayoutAdmin = () => {
                 && item.method === ALL_PERMISSIONS.USERS.GET_PAGINATE.method
             )
 
-            const full = [
+            const full: MenuProps['items'] = [
+                // BỔ SUNG TRANG CHỦ VÀO ĐẦU MENU
+                {
+                    label: <Link to='/'>Trang chủ</Link>,
+                    key: '/',
+                    icon: <HomeOutlined />
+                },
                 {
                     label: <Link to='/admin'>Dashboard</Link>,
                     key: '/admin',
@@ -108,14 +116,21 @@ const LayoutAdmin = () => {
                     key: '/admin/role',
                     icon: <ExceptionOutlined />
                 }] : []),
-
-
-
             ];
+
+            // BỔ SUNG NÚT ĐĂNG XUẤT NẾU LÀ MOBILE
+            if (isMobile) {
+                full.push({
+                    label: 'Đăng xuất',
+                    key: 'logout',
+                    icon: <LogoutOutlined />
+                });
+            }
 
             setMenuItems(full);
         }
     }, [permissions])
+
     useEffect(() => {
         setActiveMenu(location.pathname)
     }, [location])
@@ -129,16 +144,14 @@ const LayoutAdmin = () => {
         }
     }
 
-    // if (isMobile) {
-    //     items.push({
-    //         label: <label
-    //             style={{ cursor: 'pointer' }}
-    //             onClick={() => handleLogout()}
-    //         >Đăng xuất</label>,
-    //         key: 'logout',
-    //         icon: <LogoutOutlined />
-    //     })
-    // }
+    // XỬ LÝ SỰ KIỆN CLICK MENU TẬP TRUNG
+    const handleMenuClick = (e: any) => {
+        if (e.key === 'logout') {
+            handleLogout();
+        } else {
+            setActiveMenu(e.key);
+        }
+    };
 
     const itemsDropdown = [
         {
@@ -173,14 +186,14 @@ const LayoutAdmin = () => {
                             selectedKeys={[activeMenu]}
                             mode="inline"
                             items={menuItems}
-                            onClick={(e) => setActiveMenu(e.key)}
+                            onClick={handleMenuClick} // Đã sửa
                         />
                     </Sider>
                     :
                     <Menu
                         selectedKeys={[activeMenu]}
                         items={menuItems}
-                        onClick={(e) => setActiveMenu(e.key)}
+                        onClick={handleMenuClick} // Đã sửa
                         mode="horizontal"
                     />
                 }
@@ -211,9 +224,6 @@ const LayoutAdmin = () => {
                     <Content style={{ padding: '15px' }}>
                         <Outlet />
                     </Content>
-                    {/* <Footer style={{ padding: 10, textAlign: 'center' }}>
-                        React Typescript series Nest.JS &copy; Hỏi Dân IT - Made with <HeartTwoTone />
-                    </Footer> */}
                 </Layout>
             </Layout>
 
