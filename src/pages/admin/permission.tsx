@@ -64,7 +64,7 @@ const PermissionPage = () => {
             hideInSearch: true,
         },
         {
-            title: 'Name',
+            title: 'Tên',
             dataIndex: 'name',
             sorter: true,
         },
@@ -89,7 +89,7 @@ const PermissionPage = () => {
             sorter: true,
         },
         {
-            title: 'CreatedAt',
+            title: 'Ngày tạo',
             dataIndex: 'createdAt',
             width: 200,
             sorter: true,
@@ -101,7 +101,7 @@ const PermissionPage = () => {
             hideInSearch: true,
         },
         {
-            title: 'UpdatedAt',
+            title: 'Ngày cập nhật',
             dataIndex: 'updatedAt',
             width: 200,
             sorter: true,
@@ -216,7 +216,7 @@ const PermissionPage = () => {
             >
                 <DataTable<IPermission>
                     actionRef={tableRef}
-                    headerTitle="Danh sách Permissions (Quyền Hạn)"
+                    headerTitle="Danh sách các quyền hạn"
                     rowKey="id"
                     loading={isFetching}
                     columns={columns}

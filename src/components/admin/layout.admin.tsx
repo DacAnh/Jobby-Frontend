@@ -102,7 +102,7 @@ const LayoutAdmin = () => {
                 }] : []),
 
                 ...(viewResume || ACL_ENABLE === 'false' ? [{
-                    label: <Link to='/admin/resume'>CV</Link>,
+                    label: <Link to='/admin/resume'>Đơn ứng tuyển</Link>,
                     key: '/admin/resume',
                     icon: <AliwangwangOutlined />
                 }] : []),

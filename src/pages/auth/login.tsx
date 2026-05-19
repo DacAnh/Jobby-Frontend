@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { setUserLoginInfo } from '@/redux/slice/accountSlide';
 import styles from 'styles/auth.module.scss';
 import { useAppSelector } from '@/redux/hooks';
+import { Space } from 'antd';
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -84,10 +85,17 @@ const LoginPage = () => {
                             <Form.Item
                             // wrapperCol={{ offset: 6, span: 16 }}
                             >
-                                <Button type="primary" htmlType="submit" loading={isSubmit}>
-                                    Đăng nhập
-                                </Button>
+                                <Space size="middle">
+                                    <Button type="primary" htmlType="submit" loading={isSubmit}>
+                                        Đăng nhập
+                                    </Button>
+                                    <Button>
+                                        <Link to='/' >Trang chủ</Link>
+                                    </Button>
+                                </Space>
+
                             </Form.Item>
+
                             <Divider>Or</Divider>
                             <p className="text text-normal">Chưa có tài khoản ?
                                 <span>

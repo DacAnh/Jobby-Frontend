@@ -5,6 +5,7 @@ import { callRegister } from 'config/api';
 import styles from 'styles/auth.module.scss';
 import { IUser } from '@/types/backend';
 const { Option } = Select;
+import { Space } from 'antd';
 
 
 const RegisterPage = () => {
@@ -114,9 +115,15 @@ const RegisterPage = () => {
                             < Form.Item
                             // wrapperCol={{ offset: 6, span: 16 }}
                             >
-                                <Button type="primary" htmlType="submit" loading={isSubmit} >
-                                    Đăng ký
-                                </Button>
+                                <Space size="middle">
+                                    <Button type="primary" htmlType="submit" loading={isSubmit} >
+                                        Đăng ký
+                                    </Button>
+                                    <Button>
+                                        <Link to='/' >Trang chủ</Link>
+                                    </Button>
+                                </Space>
+
                             </Form.Item>
                             <Divider> Or </Divider>
                             <p className="text text-normal" > Đã có tài khoản ?

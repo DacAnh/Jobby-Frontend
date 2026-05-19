@@ -82,12 +82,12 @@ const ResumePage = () => {
         },
 
         {
-            title: 'Job',
+            title: 'Công việc',
             dataIndex: ["job", "name"],
             hideInSearch: true,
         },
         {
-            title: 'Company',
+            title: 'Công ty',
             dataIndex: "companyName",
             hideInSearch: true,
         },
@@ -124,7 +124,7 @@ const ResumePage = () => {
         },
 
         {
-            title: 'CreatedAt',
+            title: 'Ngày tạo',
             dataIndex: 'createdAt',
             width: 200,
             sorter: true,
@@ -136,7 +136,7 @@ const ResumePage = () => {
             hideInSearch: true,
         },
         {
-            title: 'UpdatedAt',
+            title: 'Ngày cập nhật',
             dataIndex: 'updatedAt',
             width: 200,
             sorter: true,
@@ -235,7 +235,7 @@ const ResumePage = () => {
             >
                 <DataTable<IResume>
                     actionRef={tableRef}
-                    headerTitle="Danh sách Resumes"
+                    headerTitle="Danh sách ứng tuyển"
                     rowKey="id"
                     loading={isFetching}
                     columns={columns}

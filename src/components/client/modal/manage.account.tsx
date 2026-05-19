@@ -46,7 +46,7 @@ const UserResume = (props: any) => {
             dataIndex: "companyName",
         },
         {
-            title: 'Job title',
+            title: 'Công việc',
             dataIndex: ["job", "name"],
         },
         {

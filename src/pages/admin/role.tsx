@@ -58,7 +58,7 @@ const RolePage = () => {
             hideInSearch: true,
         },
         {
-            title: 'Name',
+            title: 'Tên',
             dataIndex: 'name',
             sorter: true,
         },
@@ -75,7 +75,7 @@ const RolePage = () => {
             hideInSearch: true,
         },
         {
-            title: 'CreatedAt',
+            title: 'Ngày tạo',
             dataIndex: 'createdAt',
             width: 200,
             sorter: true,
@@ -87,7 +87,7 @@ const RolePage = () => {
             hideInSearch: true,
         },
         {
-            title: 'UpdatedAt',
+            title: 'Ngày cập nhật',
             dataIndex: 'updatedAt',
             width: 200,
             sorter: true,
@@ -191,7 +191,7 @@ const RolePage = () => {
             >
                 <DataTable<IRole>
                     actionRef={tableRef}
-                    headerTitle="Danh sách Roles (Vai Trò)"
+                    headerTitle="Danh sách các vai trò"
                     rowKey="id"
                     loading={isFetching}
                     columns={columns}
