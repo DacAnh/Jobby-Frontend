@@ -47,7 +47,7 @@ const ViewDetailResume = (props: IProps) => {
     return (
         <>
             <Drawer
-                title="Thông Tin Resume"
+                title="Thông Tin ứng tuyển"
                 placement="right"
                 onClose={() => { onClose(false); setDataInit(null) }}
                 open={open}
@@ -57,7 +57,7 @@ const ViewDetailResume = (props: IProps) => {
                 extra={
 
                     <Button loading={isSubmit} type="primary" onClick={handleChangeStatus}>
-                        Change Status
+                        Thay đổi trạng thái
                     </Button>
 
                 }
@@ -76,16 +76,16 @@ const ViewDetailResume = (props: IProps) => {
                                     style={{ width: "100%" }}
                                     defaultValue={dataInit?.status}
                                 >
-                                    <Option value="PENDING">PENDING</Option>
-                                    <Option value="REVIEWING">REVIEWING</Option>
-                                    <Option value="APPROVED">APPROVED</Option>
-                                    <Option value="REJECTED">REJECTED</Option>
+                                    <Option value="PENDING">Chờ xử lý</Option>
+                                    <Option value="REVIEWING">Đang xem xét</Option>
+                                    <Option value="APPROVED">Đã chấp nhận</Option>
+                                    <Option value="REJECTED">Từ chối</Option>
                                 </Select>
                             </Form.Item>
                         </Form>
 
                     </Descriptions.Item>
-                    <Descriptions.Item label="Tên Job">
+                    <Descriptions.Item label="Tên công việc">
                         {dataInit?.job?.name}
 
                     </Descriptions.Item>

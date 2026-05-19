@@ -2,7 +2,7 @@ import DataTable from "@/components/client/data-table";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { IResume } from "@/types/backend";
 import { ActionType, ProColumns, ProFormSelect } from '@ant-design/pro-components';
-import { Space, message, notification } from "antd";
+import { Space, message, notification, Tag } from "antd";
 import { useState, useRef } from 'react';
 import dayjs from 'dayjs';
 import { callDeleteResume } from "@/config/api";
@@ -65,18 +65,45 @@ const ResumePage = () => {
             title: 'Trạng Thái',
             dataIndex: 'status',
             sorter: true,
+            // THÊM HÀM RENDER NÀY ĐỂ DỊCH VÀ ĐỔ MÀU TAG
+            render: (text, record, index, action) => {
+                let color = 'default';
+                let statusText = record.status;
+
+                switch (record.status) {
+                    case 'PENDING':
+                        color = 'orange';
+                        statusText = 'Chờ xử lý';
+                        break;
+                    case 'REVIEWING':
+                        color = 'blue';
+                        statusText = 'Đang xem xét';
+                        break;
+                    case 'APPROVED':
+                        color = 'green';
+                        statusText = 'Đã chấp nhận';
+                        break;
+                    case 'REJECTED':
+                        color = 'red';
+                        statusText = 'Từ chối';
+                        break;
+                }
+
+                return <Tag color={color}>{statusText}</Tag>;
+            },
+            // Giữ nguyên phần renderFormItem để Form tìm kiếm vẫn hoạt động
             renderFormItem: (item, props, form) => (
                 <ProFormSelect
                     showSearch
                     mode="multiple"
                     allowClear
                     valueEnum={{
-                        PENDING: 'PENDING',
-                        REVIEWING: 'REVIEWING',
-                        APPROVED: 'APPROVED',
-                        REJECTED: 'REJECTED',
+                        PENDING: 'Chờ xử lý',    // Đổi luôn label trong ô chọn tìm kiếm
+                        REVIEWING: 'Đang xem xét',
+                        APPROVED: 'Đã chấp nhận',
+                        REJECTED: 'Từ chối',
                     }}
-                    placeholder="Chọn level"
+                    placeholder="Chọn trạng thái"
                 />
             ),
         },

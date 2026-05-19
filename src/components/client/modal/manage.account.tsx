@@ -1,4 +1,4 @@
-import { Modal, Table, Tabs } from "antd";
+import { Modal, Table, Tabs, Tag } from "antd";
 import { isMobile } from "react-device-detect";
 import type { TabsProps } from 'antd';
 import { IResume } from "@/types/backend";
@@ -43,7 +43,7 @@ const UserResume = (props: any) => {
         },
         {
             title: 'Công Ty',
-            dataIndex: "companyName",
+            dataIndex: ["job", "company", "name"],
         },
         {
             title: 'Công việc',
@@ -52,6 +52,32 @@ const UserResume = (props: any) => {
         {
             title: 'Trạng thái',
             dataIndex: "status",
+            render: (status: string) => {
+                let color = 'default';
+                let text = status;
+
+                // Map các giá trị Enum từ Backend sang tiếng Việt và gán màu
+                switch (status) {
+                    case 'PENDING':
+                        color = 'orange';
+                        text = 'Chờ xử lý';
+                        break;
+                    case 'REVIEWING':
+                        color = 'blue';
+                        text = 'Đang xem xét';
+                        break;
+                    case 'APPROVED':
+                        color = 'green';
+                        text = 'Đã chấp nhận';
+                        break;
+                    case 'REJECTED':
+                        color = 'red';
+                        text = 'Từ chối';
+                        break;
+                }
+
+                return <Tag color={color}>{text}</Tag>;
+            }
         },
         {
             title: 'Ngày rải CV',
