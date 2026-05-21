@@ -142,7 +142,7 @@ const UserUpdateInfo = (props: any) => {
         const { name, age, gender, address } = values;
         setIsSubmit(true);
 
-        const res = await callUpdateUser(user?.id, name, age, gender, address);
+        const res = await callUpdateUser({ id: user?.id, name, age, gender, address });
 
         if (res && res.data) {
             message.success("Cập nhật thông tin thành công!");
