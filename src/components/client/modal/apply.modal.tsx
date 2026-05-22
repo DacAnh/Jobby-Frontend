@@ -72,7 +72,7 @@ const ApplyModal = (props: IProps) => {
                 // console.log(info.file, info.fileList);
             }
             if (info.file.status === 'done') {
-                message.success(`${info.file.name} file uploaded successfully`);
+                message.success(`Tệp ${info.file.name} đã được tải lên thành công`);
             } else if (info.file.status === 'error') {
                 message.error(info?.file?.error?.event?.message ?? "Đã có lỗi xảy ra khi upload file.")
             }
