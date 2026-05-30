@@ -108,8 +108,16 @@ const Header = (props: any) => {
                 <div className={styles["container"]}>
                     {!isMobile ?
                         <div style={{ display: "flex", gap: 30 }}>
-                            <div className={styles['brand']} >
-                                <FaReact onClick={() => navigate('/')} title='Hỏi Dân IT' />
+                            <div
+                                className="brand"
+                                style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+                                onClick={() => window.location.href = '/'} // Click vào logo để về Trang chủ
+                            >
+                                <img
+                                    src="/Jobby-Logo.png"
+                                    alt="Jobby Logo"
+                                    style={{ height: '35px', width: 'auto' }}
+                                />
                             </div>
                             <div className={styles['top-menu']}>
                                 <ConfigProvider
